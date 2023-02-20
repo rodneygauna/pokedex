@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PokeDex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/skeleton/normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/skeleton/skeleton.css') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='favicon.png') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="one column">
+          <img src="{{ url_for('static', filename='25.png') }}" alt="pikachu" />
+        </div>
+        <div class="eleven columns"><h1>PokeDex</h1></div>
+      </div>
+      <form method="POST">
+        <label for="pokemon_name">Pokemon Name or ID:</label>
+        <input
+          class="u-full-width"
+          type="text"
+          placeholder="Example 'Pikachu' or '25'"
+          id="pokemon_name"
+          name="pokemon_name"
+        />
+        <input class="button-primary" type="submit" value="Search" />
+      </form>
+      {% if error %}
+      <p>{{ error }}</p>
+      {% endif %} {% if pokemon %}
+      <img
+        src="{{ pokemon['sprites']['front_default'] }}"
+        alt="{{ pokemon['name'] }}"
+      />
+      <table class="u-full-width">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Types</th>
+            <th>Games</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ pokemon['id'] }}</td>
+            <td>{{ pokemon['name'].capitalize() }}</td>
+            <td>{{ ', '.join(pokemon_types) }}</td>
+            <td>{{ ', '.join(pokemon_games) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      {% endif %}
+    </div>
+  </body>
+</html>
